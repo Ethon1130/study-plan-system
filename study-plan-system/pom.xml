@@ -11,7 +11,7 @@
 
     <modules>
         <module>common-module</module>
-        <module>backend-module</module>
+        <module>server-module</module>
         <module>ui-module</module>
     </modules>
 
@@ -24,6 +24,7 @@
 
     <dependencyManagement>
         <dependencies>
+            <!-- 项目内部模块依赖 -->
             <dependency>
                 <groupId>com.group3</groupId>
                 <artifactId>common-module</artifactId>
@@ -31,10 +32,11 @@
             </dependency>
             <dependency>
                 <groupId>com.group3</groupId>
-                <artifactId>backend-module</artifactId>
+                <artifactId>server-module</artifactId>
                 <version>${project.version}</version>
             </dependency>
 
+            <!-- JavaFX 依赖 -->
             <dependency>
                 <groupId>org.openjfx</groupId>
                 <artifactId>javafx-controls</artifactId>
@@ -45,6 +47,8 @@
                 <artifactId>javafx-fxml</artifactId>
                 <version>${javafx.version}</version>
             </dependency>
+            
+            <!-- 数据库和工具依赖 -->
             <dependency>
                 <groupId>com.h2database</groupId>
                 <artifactId>h2</artifactId>
@@ -54,7 +58,33 @@
                 <groupId>org.projectlombok</groupId>
                 <artifactId>lombok</artifactId>
                 <version>1.18.30</version>
+                <scope>provided</scope>
+            </dependency>
+            
+            <!-- Spring Boot 依赖管理 -->
+            <dependency>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-dependencies</artifactId>
+                <version>3.1.5</version>
+                <type>pom</type>
+                <scope>import</scope>
             </dependency>
         </dependencies>
+
     </dependencyManagement>
+
+    
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>3.8.1</version>
+                <configuration>
+                    <source>${maven.compiler.source}</source>
+                    <target>${maven.compiler.target}</target>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
 </project>
