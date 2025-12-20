@@ -7,8 +7,10 @@ CREATE TABLE IF NOT EXISTS t_user (
                                       avatar       VARCHAR(255),
                                       email        VARCHAR(128),
                                       status       INTEGER DEFAULT 1,         -- 0:禁用 1:启用
-                                      create_time  TIMESTAMP,
-                                      version      BIGINT DEFAULT 0
+                                      version      BIGINT DEFAULT 0,
+                                      create_time  TIMESTAMP,       -- 添加
+                                      update_time  TIMESTAMP,
+                                      last_login_time  TIMESTAMP
 );
 -- 管理员表，对应 com.group3.common.entity.Admin
 CREATE TABLE IF NOT EXISTS t_admin (
@@ -29,6 +31,8 @@ CREATE TABLE IF NOT EXISTS t_plan (
                                       progress     INTEGER      DEFAULT 0,    -- 0-100
                                       start_time   TIMESTAMP,
                                       end_time     TIMESTAMP,
+                                      create_time  TIMESTAMP,
+                                      update_time  TIMESTAMP,
                                       version      BIGINT       DEFAULT 0,
                                       CONSTRAINT fk_plan_user FOREIGN KEY (user_id) REFERENCES t_user(id)
 );

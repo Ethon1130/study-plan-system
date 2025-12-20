@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.group3.mapper.PlanMapper">
+
+    <insert id="insert">
+        INSERT INTO t_plan (user_id,title,description,priority,status,progress,start_time,end_time,create_time,update_time)
+        VALUES
+        (#{userId},#{title},#{description},#{priority},#{status},#{progress},#{startTime},#{endTime},#{createTime},#{updateTime})
+    </insert>
+
+    <select id="pageQuery" resultType="com.group3.common.vo.PlanPageVO">
+        select id, title, priority, status, progress, end_time, version
+        from t_plan
+        <where>
+            <if test="userId != null">
+                AND user_id = #{userId}
+            </if>
+            <if test="status != null">
+                AND status = #{status}
+            </if>
+            <if test="keyword != null and keyword != ''">
+                AND title LIKE CONCAT('%', #{keyword}, '%')
+            </if>
+            <if test="beginTime != null">
+                AND end_time &gt;= #{beginTime}
+            </if>
+            <if test="endTime != null">
+                AND end_time &lt;= #{endTime}
+            </if>
+        </where>
+        ORDER BY id DESC
+    </select>
+
+    <update id="update">
+        update t_user
+        <set>
+            <if test="title != null">
+                title = #{title},
+            </if>
+            <if test="status != null">
+                status = #{status},
+            </if>
+            <if test="progress != null">
+                progress = #{progress},
+            </if>
+            <if test="version != null">
+                version = #{version},
+            </if>
+            <if test="description != null">
+                description = #{description},
+            </if>
+            update_time = NOW()
+        </set>
+        WHERE id = #{id}
+    </update>
+</mapper>

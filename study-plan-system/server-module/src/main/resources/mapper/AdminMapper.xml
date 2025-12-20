@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.group3.mapper.AdminMapper">
+
+
+    <select id="pageQuery" resultType="com.group3.common.vo.UserPageVO"
+            parameterType="com.group3.common.dto.UserPageDTO">
+            SELECT id, username, email, status, last_login_time AS lastLoginTime
+            FROM t_user
+            <where>
+                <if test="name != null and name != ''">
+                    AND username like concat('%',#{name},'%')
+                </if>
+            </where>
+            ORDER BY id DESC
+    </select>
+</mapper>

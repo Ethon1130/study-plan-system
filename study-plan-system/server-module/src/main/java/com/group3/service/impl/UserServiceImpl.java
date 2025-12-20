@@ -1,6 +1,7 @@
 package com.group3.service.impl;
 
 import com.group3.common.dto.LoginDTO;
+import com.group3.common.dto.RegisterDTO;
 import com.group3.common.entity.User;
 import com.group3.common.exception.BusinessException;
 import com.group3.common.utils.JwtUtils;
@@ -13,6 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 
+import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -46,5 +48,17 @@ public class UserServiceImpl implements UserService {
                 .username(user.getUsername())
                 .token(token)
                 .build();
+    }
+
+    @Override
+    public void register(RegisterDTO registerDTO) {
+        User user = new User();
+        user.builder()
+                .createTime(LocalDateTime.now())
+                .username(registerDTO.getUsername())
+                .email(registerDTO.getEmail())
+                .password(registerDTO.getPassword())
+                .build();
+        userMapper.insert(user);
     }
 }

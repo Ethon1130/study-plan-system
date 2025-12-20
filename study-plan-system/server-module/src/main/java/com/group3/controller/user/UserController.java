@@ -1,12 +1,13 @@
 package com.group3.controller.user;
 
 import com.group3.common.dto.LoginDTO;
+import com.group3.common.dto.RegisterDTO;
 import com.group3.common.entity.User;
 import com.group3.common.result.Result;
 import com.group3.common.vo.UserLoginVO;
 import com.group3.service.UserService;
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiOperation;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -18,7 +19,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/user/user")
-@Api(tags = "用户相关接口")
+@Tag(name = "用户相关接口")
 @Slf4j
 public class UserController {
 
@@ -30,7 +31,7 @@ public class UserController {
      * @param loginDTO
      * @return
      */
-    @ApiOperation("用户登录")
+    @Operation(summary = "用户登录")
     @PostMapping("/login")
     public Result<UserLoginVO> login(@RequestBody LoginDTO loginDTO){
         UserLoginVO userLoginVO = userService.login(loginDTO);
@@ -39,4 +40,22 @@ public class UserController {
         }
         return Result.success(userLoginVO);
     }
+
+    /**
+     * 用户注册
+     * @param registerDTO
+     * @return
+     */
+    @Operation(summary = "用户注册")
+    @PostMapping("/register")
+    public Result register(@RequestBody RegisterDTO registerDTO){
+        userService.register(registerDTO);
+        return Result.success();
+
+    }
+
+
+
+
+  
 }

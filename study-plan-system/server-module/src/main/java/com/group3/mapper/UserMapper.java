@@ -13,4 +13,7 @@ public interface UserMapper {
      */
 
     public User selectByUsername(String username);
+
+
+    void insert(User user);
 }
