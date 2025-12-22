@@ -20,4 +20,10 @@ public interface AdminService {
      * @return
      */
     PageResult<UserPageVO> pageQuery(UserPageDTO userPAgeDTO);
+
+    /**
+     * 启用/禁用学生账号
+     * @param status
+     */
+    void startOrStop(Integer status);
 }

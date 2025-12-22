@@ -3,6 +3,7 @@ package com.group3.mapper;
 import com.github.pagehelper.Page;
 import com.group3.common.dto.UserPageDTO;
 import com.group3.common.entity.Admin;
+import com.group3.common.entity.User;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
 
@@ -26,4 +27,6 @@ public interface AdminMapper {
      * @return
      */
     Page pageQuery(UserPageDTO userPAgeDTO);
+
+    void startOrStop(User user);
 }

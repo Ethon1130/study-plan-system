@@ -3,7 +3,6 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.group3.mapper.AdminMapper">
 
-
     <select id="pageQuery" resultType="com.group3.common.vo.UserPageVO"
             parameterType="com.group3.common.dto.UserPageDTO">
             SELECT id, username, email, status, last_login_time AS lastLoginTime
@@ -15,4 +14,11 @@
             </where>
             ORDER BY id DESC
     </select>
+    <update id="startOrStop">
+        update t_user
+        set status = #{status}
+        where id = #{id}
+    </update>
+
+
 </mapper>

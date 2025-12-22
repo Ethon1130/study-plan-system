@@ -7,6 +7,8 @@ import com.group3.common.result.PageResult;
 import com.group3.common.vo.PlanPageVO;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 
 public interface PlanService {
     /**
@@ -28,4 +30,10 @@ public interface PlanService {
      * @param planUpdateDTO
      */
     void update(PlanUpdateDTO planUpdateDTO);
+
+    /**
+     * 批量删除计划
+     * @param ids
+     */
+    void deleteBatch(List<Long> ids);
 }

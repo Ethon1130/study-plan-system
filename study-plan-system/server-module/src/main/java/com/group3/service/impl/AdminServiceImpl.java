@@ -2,9 +2,11 @@ package com.group3.service.impl;
 
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
+import com.group3.common.context.BaseContext;
 import com.group3.common.dto.LoginDTO;
 import com.group3.common.dto.UserPageDTO;
 import com.group3.common.entity.Admin;
+import com.group3.common.entity.User;
 import com.group3.common.exception.BusinessException;
 import com.group3.common.result.PageResult;
 import com.group3.common.utils.JwtUtils;
@@ -34,8 +36,8 @@ public class AdminServiceImpl implements AdminService {
             throw new BusinessException("管理员用户名或者密码错误");
         }
 
+        claims.put("adminId", admin.getId());
         claims.put("username",loginDTO.getUsername());
-        claims.put("password",loginDTO.getPassword());
 
         String token = JwtUtils.createToken(claims);
 
@@ -51,5 +53,18 @@ public class AdminServiceImpl implements AdminService {
         PageHelper.startPage(userPAgeDTO.getPage(), userPAgeDTO.getPageSize());
         Page page = adminMapper.pageQuery(userPAgeDTO);
         return new PageResult<>(page.getTotal(),page.getResult());
+    }
+
+    /**
+     * 启用/禁用学生账号
+     * @param status
+     */
+    @Override
+    public void startOrStop(Integer status) {
+        Long userId = BaseContext.getCurrentId();
+        User user = new User();
+        user.setId(userId);
+        user.setStatus(status);
+        adminMapper.startOrStop(user);
     }
 }

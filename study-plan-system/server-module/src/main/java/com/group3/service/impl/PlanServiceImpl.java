@@ -16,6 +16,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Service
 @Slf4j
@@ -60,5 +61,14 @@ public class PlanServiceImpl implements PlanService {
     @Override
     public void update(PlanUpdateDTO planUpdateDTO) {
         planMapper.update(planUpdateDTO);
+    }
+
+    /**
+     * 批量删除计划
+     * @param ids
+     */
+    @Override
+    public void deleteBatch(List<Long> ids) {
+        planMapper.deleteByIds(ids);
     }
 }

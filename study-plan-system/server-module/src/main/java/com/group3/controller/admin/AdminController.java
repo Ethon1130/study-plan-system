@@ -40,6 +40,18 @@ public class AdminController {
         return Result.success(pageResult);
     }
 
+    /**
+     * 启用/禁用学生账号
+     * @param status
+     * @return
+     */
+    @PostMapping("/status{status}")
+    @Operation(summary = "启用/禁用学生账号")
+    public Result StartOrStop(@PathVariable Integer status){
+        adminService.startOrStop(status);
+        return Result.success();
+    }
+
 
 
 

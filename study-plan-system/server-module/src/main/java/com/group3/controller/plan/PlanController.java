@@ -13,6 +13,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @Tag(name = "计划管理模块")
 @RestController()
 @RequestMapping("/user/plan")
@@ -49,6 +51,25 @@ public class PlanController {
         planService.update(planUpdateDTO);
         return Result.success();
     }
+
+    /**
+     * 批量删除计划
+     * @param ids
+     * @return
+     */
+    @Operation(summary = "批量删除计划")
+    @DeleteMapping()
+    public Result deleteBatch(@RequestParam("ids") String ids){
+        log.info("批量删除计划，ids: {}", ids);
+        String cleanIds = ids.replaceAll("[()]", "").trim();
+        List<Long> idList = java.util.Arrays.stream(cleanIds.split(","))
+                .map(String::trim)
+                .map(Long::parseLong)
+                .collect(java.util.stream.Collectors.toList());
+        planService.deleteBatch(idList);
+        return Result.success();
+    }
+
 
 
 }

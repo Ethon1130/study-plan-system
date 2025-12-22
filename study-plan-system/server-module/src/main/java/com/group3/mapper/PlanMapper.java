@@ -6,6 +6,9 @@ import com.group3.common.dto.PlanUpdateDTO;
 import com.group3.common.entity.Plan;
 import com.group3.common.vo.PlanPageVO;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
+
+import java.util.List;
 
 @Mapper
 public interface PlanMapper {
@@ -28,4 +31,10 @@ public interface PlanMapper {
      * @param planUpdateDTO
      */
     void update(PlanUpdateDTO planUpdateDTO);
+
+    /**
+     * 批量删除计划
+     * @param ids
+     */
+    void deleteByIds(@Param("ids") List<Long> ids);
 }
