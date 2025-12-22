@@ -10,6 +10,7 @@
                last_login_time AS lastLoginTime, version
         FROM t_user
         WHERE username = #{username}
+        LIMIT 1
     </select>
     <insert id="insert">
         INSERT INTO t_user (username, password, phone, avatar, email, status, create_time, update_time, last_login_time, version)

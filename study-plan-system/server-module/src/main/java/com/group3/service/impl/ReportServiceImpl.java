@@ -49,7 +49,11 @@ public class ReportServiceImpl implements ReportService {
                 .ganttData(ganttData)
                 .build();
     }
-    
+
+    /**
+     * 导出用户的学习计划报表
+     * @param outputStream
+     */
     @Override
     public void exportExcel(OutputStream outputStream) {
         Long userId = BaseContext.getCurrentId();
