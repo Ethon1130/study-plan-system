@@ -1,7 +1,12 @@
 package com.group3.common.vo;
 
+import lombok.Data;
+import lombok.Getter;
+
 import java.time.LocalDateTime;
 
+@Data
+@Getter
 public class PlanPageVO {
     private Long id;
     private String title;

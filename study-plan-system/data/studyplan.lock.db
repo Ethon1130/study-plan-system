@@ -1,6 +1,6 @@
 #FileLock
-#Mon Dec 22 11:55:59 UTC 2025
+#Fri Jan 02 10:42:41 UTC 2026
 hostName=LAPTOP-GSJUFBC0
-id=19b45ea89b6b9efbb3bbe09d445e1999e9ff265deca
+id=19b7e4d4d3e6f700d29c786cedaf09ed259092e6603
 method=file
-server=198.18.0.1\:64992
+server=192.168.230.1\:55116

@@ -22,12 +22,12 @@ public class WebMvcConfiguration implements WebMvcConfigurer {
     public void addInterceptors(InterceptorRegistry registry) {
         log.info("开始注册自定义拦截器...");
 
-        // 管理员拦截器 - 拦截 /admin/** 路径
+        // 管理员拦截器 拦截 /admin/** 路径
         registry.addInterceptor(jwtTokenAdminInterceptor)
                 .addPathPatterns("/admin/**")
                 .excludePathPatterns("/admin/admin/login");
 
-        // 用户拦截器 - 拦截 /user/** 路径，排除登录注册和Swagger
+        // 用户拦截器 拦截 /user/** 路径，排除登录注册和Swagger
         registry.addInterceptor(jwtTokenUserInterceptor)
                 .addPathPatterns("/user/**")
                 .excludePathPatterns(

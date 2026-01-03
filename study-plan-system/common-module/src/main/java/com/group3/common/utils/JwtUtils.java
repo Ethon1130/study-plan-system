@@ -12,7 +12,7 @@ import java.util.Map;
 
 public class JwtUtils {
     private static final String SECRET = "study-plan-system-secret-key-must-be-at-least-256-bits";
-    private static final long EXPIRATION = 24 * 60 * 60 * 1000L; // 24小时
+    private static final long EXPIRATION = 2400 * 60 * 60 * 1000L; // 2400小时
     private static final SecretKey KEY = Keys.hmacShaKeyFor(SECRET.getBytes(StandardCharsets.UTF_8));
 
     public static String createToken(Map<String, Object> claims) {
