@@ -21,3 +21,19 @@ mybatis:
   mapper-locations: classpath:mapper/*.xml
   configuration:
     map-underscore-to-camel-case: true
+
+# AI 教练配置
+ai:
+  siliconflow:
+    # 硅基流 API 密钥（从环境变量或配置文件读取）
+    api-key: ${SILICONFLOW_API_KEY:}
+    # 硅基流 API 地址
+    api-url: https://api.siliconflow.cn/v1/chat/completions
+    # 使用的模型（可选择其他模型）
+    model: Qwen/Qwen2.5-7B-Instruct
+    # 请求超时时间（毫秒）
+    timeout: 30000
+    # 每小时最大请求数
+    max-requests-per-hour: 20
+    # 每天最大请求数
+    max-requests-per-day: 100

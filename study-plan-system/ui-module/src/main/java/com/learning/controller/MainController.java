@@ -72,6 +72,8 @@ public class MainController {
     @FXML
     private Label descriptionLabel;
     @FXML
+    private Button aiCoachButton;
+    @FXML
     private Button reportButton;
     @FXML
     private Button logoutButton;
@@ -155,6 +157,7 @@ public class MainController {
         // 绑定按钮事件
         addPlanBtn.setOnAction(this::handleAddPlan);
         deletePlanBtn.setOnAction(this::handleDeletePlan);
+        aiCoachButton.setOnAction(this::handleAiCoach);
         reportButton.setOnAction(this::handleReport);
         logoutButton.setOnAction(this::handleLogout);
         
@@ -344,6 +347,26 @@ public class MainController {
         alert.showAndWait();
     }
 
+    @FXML
+    private void handleAiCoach(ActionEvent event) {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/learning/view/AiCoachView.fxml"));
+            Parent root = loader.load();
+            
+            Stage stage = (Stage) aiCoachButton.getScene().getWindow();
+            Scene scene = new Scene(root);
+            scene.getStylesheets().add(getClass().getResource("/com/learning/css/styles.css").toExternalForm());
+            
+            stage.setTitle("AI 助手");
+            stage.setScene(scene);
+            stage.show();
+            
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            showAlert(Alert.AlertType.ERROR, "错误", "打开 AI 助手界面失败");
+        }
+    }
+    
     @FXML
     private void handleReport(ActionEvent event) {
         try {

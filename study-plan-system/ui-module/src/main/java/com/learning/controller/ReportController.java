@@ -71,21 +71,27 @@ public class ReportController {
         exportButton.setDisable(true);
         
         Task<Void> exportTask = ApiService.exportExcel();
+        
         exportTask.setOnSucceeded(e -> {
             exportButton.setDisable(false);
+            
             Alert alert = new Alert(Alert.AlertType.INFORMATION);
             alert.setTitle("导出成功");
             alert.setHeaderText(null);
-            alert.setContentText("报表已成功导出到Excel文件");
+            alert.setContentText("报表已成功导出！\n\n文件已保存到您的下载文件夹。");
             alert.showAndWait();
         });
         
         exportTask.setOnFailed(e -> {
             exportButton.setDisable(false);
+            
+            Throwable exception = exportTask.getException();
+            String errorMsg = exception != null ? exception.getMessage() : "未知错误";
+            
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("导出失败");
             alert.setHeaderText(null);
-            alert.setContentText("导出报表时发生错误，请稍后重试");
+            alert.setContentText("导出报表时发生错误：\n" + errorMsg);
             alert.showAndWait();
         });
         

@@ -7,6 +7,7 @@ import com.group3.common.entity.Plan;
 import com.group3.common.vo.PlanPageVO;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
+import org.apache.ibatis.annotations.Select;
 
 import java.util.List;
 
@@ -37,4 +38,22 @@ public interface PlanMapper {
      * @param ids
      */
     void deleteByIds(@Param("ids") List<Long> ids);
+    
+    /**
+     * 统计用户的总计划数
+     */
+    @Select("SELECT COUNT(*) FROM t_plan WHERE user_id = #{userId}")
+    Integer countTotalPlans(Long userId);
+    
+    /**
+     * 统计用户的已完成计划数
+     */
+    @Select("SELECT COUNT(*) FROM t_plan WHERE user_id = #{userId} AND status = 2")
+    Integer countCompletedPlans(Long userId);
+    
+    /**
+     * 统计用户的进行中计划数
+     */
+    @Select("SELECT COUNT(*) FROM t_plan WHERE user_id = #{userId} AND status = 1")
+    Integer countInProgressPlans(Long userId);
 }

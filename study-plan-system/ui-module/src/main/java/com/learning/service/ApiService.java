@@ -81,10 +81,92 @@ public class ApiService {
         return new Task<Void>() {
             @Override
             protected Void call() throws Exception {
-                // 这里需要特殊处理文件下载
-                // 暂时简化处理
-                return null;
+                try {
+                    // 调用后端导出接口
+                    java.util.concurrent.CompletableFuture<java.net.http.HttpResponse<byte[]>> future = 
+                        HttpClientUtil.downloadFile("/user/report/export");
+                    
+                    System.out.println("Waiting for Excel download...");
+                    java.net.http.HttpResponse<byte[]> response = future.get(60, java.util.concurrent.TimeUnit.SECONDS);
+                    
+                    if (response.statusCode() >= 200 && response.statusCode() < 300) {
+                        byte[] excelData = response.body();
+                        System.out.println("Received Excel file: " + excelData.length + " bytes");
+                        
+                        // 获取文件名
+                        String filename = "学习计划报表_" + java.time.LocalDateTime.now().format(
+                            java.time.format.DateTimeFormatter.ofPattern("yyyyMMdd_HHmmss")) + ".xlsx";
+                        
+                        // 保存文件到用户的下载目录
+                        String downloadDir = System.getProperty("user.home") + java.io.File.separator + "Downloads";
+                        java.io.File dir = new java.io.File(downloadDir);
+                        if (!dir.exists()) {
+                            dir.mkdirs();
+                        }
+                        
+                        java.io.File file = new java.io.File(downloadDir, filename);
+                        try (java.io.FileOutputStream fos = new java.io.FileOutputStream(file)) {
+                            fos.write(excelData);
+                            fos.flush();
+                        }
+                        
+                        System.out.println("Excel file saved to: " + file.getAbsolutePath());
+                        
+                        // 尝试打开文件所在的目录
+                        try {
+                            if (System.getProperty("os.name").toLowerCase().contains("win")) {
+                                Runtime.getRuntime().exec("explorer.exe /select," + file.getAbsolutePath());
+                            } else if (System.getProperty("os.name").toLowerCase().contains("mac")) {
+                                Runtime.getRuntime().exec(new String[]{"open", "-R", file.getAbsolutePath()});
+                            } else {
+                                // Linux
+                                Runtime.getRuntime().exec(new String[]{"xdg-open", downloadDir});
+                            }
+                        } catch (Exception e) {
+                            System.err.println("Failed to open file explorer: " + e.getMessage());
+                        }
+                        
+                        return null;
+                    } else {
+                        String errorMsg = "Download failed: " + response.statusCode();
+                        System.err.println(errorMsg);
+                        throw new RuntimeException(errorMsg);
+                    }
+                } catch (java.util.concurrent.TimeoutException e) {
+                    System.err.println("Download timeout: " + e.getMessage());
+                    throw new RuntimeException("Download timeout after 60 seconds", e);
+                } catch (Exception e) {
+                    System.err.println("Download error: " + e.getMessage());
+                    e.printStackTrace();
+                    throw new RuntimeException("Failed to download Excel file", e);
+                }
             }
         };
+    }
+    
+    // AI 教练相关 API
+    public static Task<ApiResponse<AiCoachResponse>> getCoachReply(String question, String context) {
+        AiCoachRequest request = new AiCoachRequest();
+        request.setQuestion(question);
+        request.setContext(context);
+        request.setIncludeProgress(true);
+        
+        CompletableFuture<HttpResponse<String>> future = HttpClientUtil.post("/user/ai/coach", request);
+        return HttpClientUtil.createApiTask(future, new TypeReference<ApiResponse<AiCoachResponse>>() {});
+    }
+    
+    public static Task<ApiResponse<String>> getProgressAnalysis() {
+        CompletableFuture<HttpResponse<String>> future = HttpClientUtil.get("/user/ai/progress-analysis");
+        return HttpClientUtil.createApiTask(future, new TypeReference<ApiResponse<String>>() {});
+    }
+    
+    public static Task<ApiResponse<String>> getLearningAdvice() {
+        CompletableFuture<HttpResponse<String>> future = HttpClientUtil.get("/user/ai/learning-advice");
+        return HttpClientUtil.createApiTask(future, new TypeReference<ApiResponse<String>>() {});
+    }
+    
+    public static Task<ApiResponse<Integer>> getRemainingRequests() {
+        CompletableFuture<HttpResponse<String>> future = HttpClientUtil.get("/user/ai/remaining-requests");
+        return HttpClientUtil.createApiTask(future, new TypeReference<ApiResponse<Integer>>() {});
     }
 }

@@ -168,6 +168,38 @@ public class HttpClientUtil {
                 });
     }
 
+    /**
+     * 下载文件（用于导出 Excel 等二进制文件）
+     */
+    public static CompletableFuture<HttpResponse<byte[]>> downloadFile(String endpoint) {
+        HttpRequest.Builder builder = HttpRequest.newBuilder()
+                .uri(URI.create(BASE_URL + endpoint))
+                .timeout(Duration.ofSeconds(30))
+                .GET();
+        
+        // 只在token不为空时添加Authorization header
+        if (token != null && !token.trim().isEmpty()) {
+            String authHeader = "Bearer " + token;
+            builder.header("Authorization", authHeader);
+            System.out.println("Download request with Authorization: " + authHeader.substring(0, Math.min(50, authHeader.length())) + "...");
+        } else {
+            System.out.println("Download request WITHOUT token - token value: " + token);
+        }
+        
+        HttpRequest request = builder.build();
+        System.out.println("Download request to: " + BASE_URL + endpoint);
+
+        return client.sendAsync(request, HttpResponse.BodyHandlers.ofByteArray())
+                .whenComplete((response, throwable) -> {
+                    if (throwable != null) {
+                        System.err.println("Download request failed: " + throwable.getMessage());
+                        throwable.printStackTrace();
+                    } else {
+                        System.out.println("Download response: " + response.statusCode() + ", size: " + response.body().length + " bytes");
+                    }
+                });
+    }
+
     public static <T> T parseResponse(String json, TypeReference<T> typeRef) {
         try {
             return objectMapper.readValue(json, typeRef);
