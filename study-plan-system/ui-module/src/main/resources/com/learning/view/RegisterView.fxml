@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
+
+<BorderPane xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml" fx:controller="com.learning.controller.RegisterController" styleClass="register-container">
+    <center>
+        <VBox spacing="20" alignment="CENTER" styleClass="register-panel">
+            <padding><Insets top="40" right="40" bottom="40" left="40"/></padding>
+            
+            <!-- 标题 -->
+            <Label text="用户注册" styleClass="register-title" />
+            <Label text="创建您的学习计划账户" styleClass="register-subtitle" />
+            
+            <!-- 注册表单 -->
+            <VBox spacing="15" styleClass="form-container">
+                <VBox spacing="5">
+                    <Label text="用户名:" styleClass="form-label" />
+                    <TextField fx:id="usernameField" promptText="请输入用户名" styleClass="form-input" />
+                </VBox>
+                
+                <VBox spacing="5">
+                    <Label text="邮箱:" styleClass="form-label" />
+                    <TextField fx:id="emailField" promptText="请输入邮箱地址" styleClass="form-input" />
+                </VBox>
+                
+                <VBox spacing="5">
+                    <Label text="密码:" styleClass="form-label" />
+                    <PasswordField fx:id="passwordField" promptText="请输入密码" styleClass="form-input" />
+                </VBox>
+                
+                <VBox spacing="5">
+                    <Label text="确认密码:" styleClass="form-label" />
+                    <PasswordField fx:id="confirmPasswordField" promptText="请再次输入密码" styleClass="form-input" />
+                </VBox>
+            </VBox>
+            
+            <!-- 按钮区域 -->
+            <HBox spacing="15" alignment="CENTER">
+                <Button fx:id="registerButton" text="注册" styleClass="register-button" />
+                <Button fx:id="cancelButton" text="取消" styleClass="cancel-button" />
+            </HBox>
+            
+            <!-- 错误信息 -->
+            <Label fx:id="errorLabel" text="" styleClass="error-label" visible="false" />
+        </VBox>
+    </center>
+</BorderPane>

@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
+
+<BorderPane xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml" fx:controller="com.learning.controller.MainController" styleClass="main-container">
+    <!-- 顶部标题区域 -->
+    <top>
+        <VBox styleClass="header">
+            <Label text="个人学习计划与跟踪系统" styleClass="title" />
+            <Label text="管理您的学习计划，跟踪学习进度" styleClass="subtitle" />
+        </VBox>
+    </top>
+
+    <!-- 中央内容区域 -->
+    <center>
+        <HBox spacing="20" styleClass="content">
+            <!-- 左侧：学习计划管理 -->
+            <VBox spacing="15" prefWidth="450" styleClass="left-panel">
+                <!-- 添加学习计划面板 -->
+                <TitledPane text="添加学习计划" styleClass="titled-pane">
+                    <VBox spacing="10" styleClass="form-panel">
+                        <padding><Insets top="15" right="15" bottom="15" left="15"/></padding>
+                        <GridPane hgap="10" vgap="10">
+                            <Label text="计划标题:" GridPane.columnIndex="0" GridPane.rowIndex="0" styleClass="label" />
+                            <TextField fx:id="planTitleField" GridPane.columnIndex="1" GridPane.rowIndex="0" styleClass="text-field" />
+                            
+                            <Label text="优先级:" GridPane.columnIndex="0" GridPane.rowIndex="1" styleClass="label" />
+                            <ComboBox fx:id="planSubjectComboBox" GridPane.columnIndex="1" GridPane.rowIndex="1" styleClass="combo-box" />
+                            
+                            <Label text="开始日期:" GridPane.columnIndex="0" GridPane.rowIndex="2" styleClass="label" />
+                            <DatePicker fx:id="planStartDatePicker" GridPane.columnIndex="1" GridPane.rowIndex="2" styleClass="date-picker" />
+                            
+                            <Label text="结束日期:" GridPane.columnIndex="0" GridPane.rowIndex="3" styleClass="label" />
+                            <DatePicker fx:id="planEndDatePicker" GridPane.columnIndex="1" GridPane.rowIndex="3" styleClass="date-picker" />
+                        </GridPane>
+                        
+                        <Label text="计划描述:" styleClass="label" />
+                        <TextArea fx:id="planDescriptionArea" prefRowCount="3" styleClass="text-area" />
+                        
+                        <HBox alignment="CENTER_RIGHT">
+                            <Button fx:id="addPlanBtn" text="添加学习计划" styleClass="button" />
+                            <Button fx:id="deletePlanBtn" text="删除选中计划" styleClass="button button-danger" />
+                        </HBox>
+                    </VBox>
+                </TitledPane>
+                
+                <!-- 学习计划列表 -->
+                <TitledPane text="学习计划列表" styleClass="titled-pane">
+                    <VBox styleClass="table-container">
+                        <TableView fx:id="plansTable" prefHeight="400" styleClass="table">
+                            <columns>
+                                <TableColumn fx:id="planTitleColumn" text="计划标题" prefWidth="150" />
+                                <TableColumn fx:id="planSubjectColumn" text="优先级" prefWidth="80" />
+                                <TableColumn fx:id="planTotalHoursColumn" text="开始日期" prefWidth="80" />
+                                <TableColumn fx:id="planCompletedHoursColumn" text="结束日期" prefWidth="80" />
+                                <TableColumn fx:id="planProgressColumn" text="进度" prefWidth="80" />
+                                <TableColumn fx:id="planStatusColumn" text="状态" prefWidth="80" />
+                            </columns>
+                        </TableView>
+                    </VBox>
+                </TitledPane>
+            </VBox>
+            
+            <!-- 右侧：当前计划概览 -->
+            <VBox spacing="15" prefWidth="400" styleClass="right-panel">
+                <TitledPane text="当前计划概览" styleClass="titled-pane" expanded="true">
+                    <VBox spacing="15" styleClass="form-panel">
+                        <padding><Insets top="15" right="15" bottom="15" left="15"/></padding>
+                        <Label text="当前选中计划:" styleClass="label" />
+                        <Label fx:id="selectedPlanLabel" text="未选择学习计划" styleClass="selected-plan-label" wrapText="true" />
+                        
+                        <Separator styleClass="separator" />
+                        
+                        <GridPane hgap="10" vgap="10">
+                            <Label text="计划状态:" styleClass="label" GridPane.columnIndex="0" GridPane.rowIndex="0" />
+                            <Label fx:id="statusLabel" text="-" styleClass="value-label" GridPane.columnIndex="1" GridPane.rowIndex="0" />
+                            
+                            <Label text="优先级:" styleClass="label" GridPane.columnIndex="0" GridPane.rowIndex="1" />
+                            <Label fx:id="priorityLabel" text="-" styleClass="value-label" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                            
+                            <Label text="开始日期:" styleClass="label" GridPane.columnIndex="0" GridPane.rowIndex="2" />
+                            <Label fx:id="startDateLabel" text="-" styleClass="value-label" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                            
+                            <Label text="结束日期:" styleClass="label" GridPane.columnIndex="0" GridPane.rowIndex="3" />
+                            <Label fx:id="endDateLabel" text="-" styleClass="value-label" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                        </GridPane>
+                        
+                        <Separator styleClass="separator" />
+                        
+                        <VBox spacing="5">
+                            <Label text="总体进度:" styleClass="label" />
+                            <ProgressBar fx:id="progressBar" progress="0" styleClass="progress-bar" prefWidth="350" />
+                            <Label fx:id="progressText" text="0%" styleClass="progress-text" />
+                        </VBox>
+                        
+                        <Separator styleClass="separator" />
+                        
+                        <VBox spacing="5">
+                            <Label text="计划描述:" styleClass="label" />
+                            <ScrollPane prefHeight="100" fitToWidth="true">
+                                <Label fx:id="descriptionLabel" text="暂无描述" styleClass="description-label" wrapText="true" />
+                            </ScrollPane>
+                        </VBox>
+                    </VBox>
+                </TitledPane>
+            </VBox>
+        </HBox>
+    </center>
+
+    <!-- 底部页脚区域 -->
+    <bottom>
+        <VBox spacing="10">
+            <HBox alignment="CENTER" spacing="15">
+                <Button fx:id="reportButton" text="查看统计报表" styleClass="button button-primary" />
+                <Button fx:id="logoutButton" text="退出登录" styleClass="button button-danger" />
+            </HBox>
+            <HBox styleClass="footer">
+                <Label text="© 2024 个人学习计划与跟踪系统" styleClass="footer-text" />
+            </HBox>
+        </VBox>
+    </bottom>
+</BorderPane>

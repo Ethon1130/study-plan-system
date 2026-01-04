@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
+
+<BorderPane xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml" fx:controller="com.learning.controller.ReportController" styleClass="main-container">
+    <!-- 顶部标题区域 -->
+    <top>
+        <VBox styleClass="header">
+            <Label text="学习统计报表" styleClass="title" />
+            <Label text="查看您的学习进度和统计数据" styleClass="subtitle" />
+        </VBox>
+    </top>
+
+    <!-- 中央内容区域 -->
+    <center>
+        <VBox spacing="20" styleClass="content">
+            <!-- 统计卡片区域 -->
+            <HBox spacing="15" styleClass="stats-cards">
+                <!-- 总计划数卡片 -->
+                <VBox styleClass="stat-card" prefWidth="200">
+                    <Label text="总计划数" styleClass="stat-label" />
+                    <Label fx:id="totalPlansLabel" text="0" styleClass="stat-value" />
+                </VBox>
+                
+                <!-- 已完成卡片 -->
+                <VBox styleClass="stat-card completed" prefWidth="200">
+                    <Label text="已完成" styleClass="stat-label" />
+                    <Label fx:id="completedPlansLabel" text="0" styleClass="stat-value" />
+                </VBox>
+                
+                <!-- 进行中卡片 -->
+                <VBox styleClass="stat-card in-progress" prefWidth="200">
+                    <Label text="进行中" styleClass="stat-label" />
+                    <Label fx:id="inProgressPlansLabel" text="0" styleClass="stat-value" />
+                </VBox>
+                
+                <!-- 完成率卡片 -->
+                <VBox styleClass="stat-card rate" prefWidth="200">
+                    <Label text="完成率" styleClass="stat-label" />
+                    <Label fx:id="completionRateLabel" text="0%" styleClass="stat-value" />
+                </VBox>
+            </HBox>
+            
+            <!-- 详细统计区域 -->
+            <TitledPane text="详细统计" styleClass="titled-pane" expanded="true">
+                <VBox spacing="15">
+                    <padding><Insets top="15" right="15" bottom="15" left="15"/></padding>
+                    
+                    <!-- 学习时长统计 -->
+                    <HBox spacing="20" alignment="CENTER_LEFT">
+                        <VBox spacing="5">
+                            <Label text="总学习时长" styleClass="detail-label" />
+                            <Label fx:id="totalHoursLabel" text="0 小时" styleClass="detail-value" />
+                        </VBox>
+                        
+                        <VBox spacing="5">
+                            <Label text="已完成时长" styleClass="detail-label" />
+                            <Label fx:id="completedHoursLabel" text="0 小时" styleClass="detail-value" />
+                        </VBox>
+                        
+                        <VBox spacing="5">
+                            <Label text="学习效率" styleClass="detail-label" />
+                            <Label fx:id="efficiencyLabel" text="良好" styleClass="detail-value" />
+                        </VBox>
+                    </HBox>
+                    
+                    <!-- 进度条 -->
+                    <VBox spacing="5">
+                        <Label text="总体进度" styleClass="detail-label" />
+                        <ProgressBar fx:id="overallProgressBar" progress="0" styleClass="progress-bar" prefWidth="600" />
+                        <Label fx:id="progressText" text="0%" styleClass="progress-text" />
+                    </VBox>
+                </VBox>
+            </TitledPane>
+            
+            <!-- 操作按钮区域 -->
+            <HBox spacing="15" alignment="CENTER">
+                <Button fx:id="refreshButton" text="刷新数据" styleClass="button" />
+                <Button fx:id="exportButton" text="导出报表" styleClass="button" />
+                <Button fx:id="backButton" text="返回主页" styleClass="button button-secondary" />
+            </HBox>
+        </VBox>
+    </center>
+</BorderPane>

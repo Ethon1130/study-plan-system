@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
+
+<BorderPane xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml" fx:controller="com.learning.controller.LoginController" styleClass="login-container">
+    <center>
+        <VBox spacing="20" alignment="CENTER" styleClass="login-panel">
+            <padding><Insets top="40" right="40" bottom="40" left="40"/></padding>
+            
+            <!-- 标题 -->
+            <Label text="学习计划管理系统" styleClass="login-title" />
+            <Label text="请登录您的账户" styleClass="login-subtitle" />
+            
+            <!-- 登录表单 -->
+            <VBox spacing="15" styleClass="form-container">
+                <VBox spacing="5">
+                    <Label text="用户名:" styleClass="form-label" />
+                    <TextField fx:id="usernameField" promptText="请输入用户名" styleClass="form-input" />
+                </VBox>
+                
+                <VBox spacing="5">
+                    <Label text="密码:" styleClass="form-label" />
+                    <PasswordField fx:id="passwordField" promptText="请输入密码" styleClass="form-input" />
+                </VBox>
+                
+                <CheckBox fx:id="rememberMeCheckBox" text="记住我" styleClass="remember-checkbox" />
+            </VBox>
+            
+            <!-- 按钮区域 -->
+            <VBox spacing="10">
+                <Button fx:id="loginButton" text="登录" styleClass="login-button" />
+                <Button fx:id="registerButton" text="注册新账户" styleClass="register-button" />
+            </VBox>
+            
+            <!-- 错误信息 -->
+            <Label fx:id="errorLabel" text="" styleClass="error-label" visible="false" />
+        </VBox>
+    </center>
+</BorderPane>
