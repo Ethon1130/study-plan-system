@@ -19,10 +19,18 @@ public class JwtTokenUserInterceptor implements HandlerInterceptor {
             return true;
         }
 
+        // 支持两种token格式：标准的Authorization Bearer 和自定义的token header
         String token = request.getHeader("token");
-
+        String authHeader = request.getHeader("Authorization");
+        
+        // 如果没有token header，尝试从Authorization header中提取
+        if ((token == null || token.trim().isEmpty()) && authHeader != null && authHeader.startsWith("Bearer ")) {
+            token = authHeader.substring(7); // 移除"Bearer "前缀
+            log.info("从Authorization header中提取token: Bearer {}", token.substring(0, Math.min(20, token.length())) + "...");
+        }
+        
         if (token == null || token.trim().isEmpty()) {
-            log.warn("请求头中未携带token，请求路径：{}", request.getRequestURI());
+            log.warn("请求头中未携带token，请求路径：{}, Authorization: {}", request.getRequestURI(), authHeader);
             response.setStatus(401);
             response.setContentType("application/json;charset=UTF-8");
             response.getWriter().write("{\"code\":0,\"msg\":\"未登录或token已过期，请先登录\",\"data\":null}");

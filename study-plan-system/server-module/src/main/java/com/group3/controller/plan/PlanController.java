@@ -36,7 +36,7 @@ public class PlanController {
      * @return
      */
     @Operation(summary = "计划分页查询")
-    @GetMapping("/page")
+    @PostMapping("/page")
     public Result<PageResult> page(@RequestBody PlanPageQueryDTO planPageQueryDTO) {
         PageResult<PlanPageVO> pageResult = planService.pageQuery(planPageQueryDTO);
         return Result.success(pageResult);
